@@ -1,0 +1,575 @@
+{
+  "bouquets": [
+    {
+      "id": "001",
+      "name": "Sunset Garden",
+      "price": 65,
+      "colors": ["orange", "yellow", "peach"],
+      "flowers": ["sunflowers", "peach roses", "orange gerbera daisies", "yellow freesia"],
+      "occasions": ["birthday", "congratulations", "friendship", "thank you"],
+      "mood": ["cheerful", "warm", "energetic", "optimistic"],
+      "symbolism": "Sunflowers represent adoration and loyalty. Peach roses convey gratitude and sincerity. A joyful arrangement that radiates warmth and celebration.",
+      "description": "A radiant bouquet bursting with warm sunset tones. Perfect for celebrating a friend's birthday or brightening someone's day. The sunflowers bring bold cheerfulness while peach roses add a touch of elegance.",
+      "size": "medium",
+      "stem_count": 18,
+      "components": [
+        {"flower": "sunflowers", "quantity": 5},
+        {"flower": "peach roses", "quantity": 6},
+        {"flower": "orange gerbera daisies", "quantity": 4},
+        {"flower": "yellow freesia", "quantity": 3}
+      ]
+    },
+    {
+      "id": "002",
+      "name": "Midnight Bloom",
+      "price": 95,
+      "colors": ["deep purple", "navy", "white"],
+      "flowers": ["deep purple calla lilies", "white orchids", "navy hydrangeas", "silver brunia"],
+      "occasions": ["anniversary", "romance", "wedding", "formal event"],
+      "mood": ["mysterious", "elegant", "sophisticated", "romantic"],
+      "symbolism": "Calla lilies represent magnificent beauty and sophistication. Orchids symbolize rare and delicate love. An arrangement that speaks of deep, enduring romance.",
+      "description": "A dramatic and sophisticated bouquet for the most meaningful moments. Deep purple and navy tones create an air of mystery and elegance, while white orchids add an ethereal touch. Ideal for anniversaries or formal romantic gestures.",
+      "size": "large",
+      "stem_count": 22,
+      "components": [
+        {"flower": "deep purple calla lilies", "quantity": 6},
+        {"flower": "white orchids", "quantity": 5},
+        {"flower": "navy hydrangeas", "quantity": 4},
+        {"flower": "silver brunia", "quantity": 7}
+      ]
+    },
+    {
+      "id": "003",
+      "name": "Garden Party",
+      "price": 55,
+      "colors": ["pink", "white", "green"],
+      "flowers": ["pink peonies", "white ranunculus", "eucalyptus", "pink sweet peas"],
+      "occasions": ["birthday", "bridal shower", "mother's day", "thank you"],
+      "mood": ["romantic", "soft", "feminine", "whimsical"],
+      "symbolism": "Peonies symbolize romance, prosperity, and good fortune. Ranunculus represent charm and attractiveness. A bouquet that feels like a stroll through an English garden.",
+      "description": "A lush, garden-inspired bouquet with a soft romantic feel. Pink peonies are the showstopper, supported by delicate white ranunculus and fresh eucalyptus. Perfect for bridal showers, Mother's Day, or anyone who loves a classic garden aesthetic.",
+      "size": "medium",
+      "stem_count": 20,
+      "components": [
+        {"flower": "pink peonies", "quantity": 5},
+        {"flower": "white ranunculus", "quantity": 6},
+        {"flower": "eucalyptus", "quantity": 5},
+        {"flower": "pink sweet peas", "quantity": 4}
+      ]
+    },
+    {
+      "id": "004",
+      "name": "Crimson Devotion",
+      "price": 85,
+      "colors": ["red", "deep red", "green"],
+      "flowers": ["red roses", "deep red dahlias", "red hypericum berries", "Italian ruscus"],
+      "occasions": ["valentine's day", "anniversary", "romance", "apology"],
+      "mood": ["passionate", "intense", "romantic", "bold"],
+      "symbolism": "Red roses are the ultimate symbol of deep love and desire. Dahlias represent commitment and an everlasting bond. The classic declaration of passionate love.",
+      "description": "The definitive romantic bouquet for when words are not enough. Rich red roses paired with deep dahlias create a lush, velvety arrangement that speaks of passion and devotion. The go-to choice for Valentine's Day or a heartfelt anniversary.",
+      "size": "large",
+      "stem_count": 24,
+      "components": [
+        {"flower": "red roses", "quantity": 12},
+        {"flower": "deep red dahlias", "quantity": 5},
+        {"flower": "red hypericum berries", "quantity": 4},
+        {"flower": "Italian ruscus", "quantity": 3}
+      ]
+    },
+    {
+      "id": "005",
+      "name": "Lavender Dreams",
+      "price": 70,
+      "colors": ["lavender", "purple", "white"],
+      "flowers": ["lavender roses", "purple lisianthus", "white waxflower", "dried lavender stems"],
+      "occasions": ["birthday", "sympathy", "get well", "thinking of you"],
+      "mood": ["calming", "gentle", "serene", "thoughtful"],
+      "symbolism": "Lavender roses express enchantment and love at first sight. Lisianthus symbolizes appreciation and gratitude. A soothing arrangement that conveys heartfelt care.",
+      "description": "A calming and beautiful bouquet in soft lavender and purple tones. The dried lavender adds a gentle fragrance and rustic charm. Ideal for someone who needs comfort, or as a thoughtful birthday gift for someone who loves purple.",
+      "size": "medium",
+      "stem_count": 18,
+      "components": [
+        {"flower": "lavender roses", "quantity": 6},
+        {"flower": "purple lisianthus", "quantity": 5},
+        {"flower": "white waxflower", "quantity": 4},
+        {"flower": "dried lavender stems", "quantity": 3}
+      ]
+    },
+    {
+      "id": "006",
+      "name": "Golden Hour",
+      "price": 75,
+      "colors": ["gold", "yellow", "cream"],
+      "flowers": ["yellow garden roses", "cream spray roses", "golden solidago", "white chamomile"],
+      "occasions": ["congratulations", "new baby", "retirement", "50th birthday"],
+      "mood": ["joyful", "celebratory", "warm", "nostalgic"],
+      "symbolism": "Yellow roses symbolize friendship, joy, and new beginnings. Chamomile represents patience and calm. A bouquet that celebrates life's golden moments.",
+      "description": "A warm and luminous bouquet that captures the feeling of a perfect golden afternoon. Ideal for celebrating major milestones -- a retirement, a 50th birthday, or welcoming a new baby. Soft and joyful without being overwhelming.",
+      "size": "medium",
+      "stem_count": 20,
+      "components": [
+        {"flower": "yellow garden roses", "quantity": 6},
+        {"flower": "cream spray roses", "quantity": 6},
+        {"flower": "golden solidago", "quantity": 5},
+        {"flower": "white chamomile", "quantity": 3}
+      ]
+    },
+    {
+      "id": "007",
+      "name": "First Blush",
+      "price": 50,
+      "colors": ["blush pink", "pale pink", "white"],
+      "flowers": ["blush pink tulips", "white anemones", "pale pink spray roses", "baby's breath"],
+      "occasions": ["new relationship", "birthday", "young adult", "first date"],
+      "mood": ["sweet", "innocent", "light", "hopeful"],
+      "symbolism": "Tulips declare perfect love and new beginnings. Anemones symbolize anticipation and excitement. A bouquet that captures the feeling of something just beginning.",
+      "description": "A delicate and sweet bouquet perfect for new beginnings. Light pink tulips and white anemones create an airy, hopeful arrangement. Perfect for a first romantic gesture, a teenage birthday, or anyone who loves soft and feminine florals.",
+      "size": "small",
+      "stem_count": 15,
+      "components": [
+        {"flower": "blush pink tulips", "quantity": 5},
+        {"flower": "white anemones", "quantity": 4},
+        {"flower": "pale pink spray roses", "quantity": 4},
+        {"flower": "baby's breath", "quantity": 2}
+      ]
+    },
+    {
+      "id": "008",
+      "name": "Tropical Storm",
+      "price": 110,
+      "colors": ["hot pink", "orange", "red", "green"],
+      "flowers": ["bird of paradise", "hot pink anthuriums", "orange protea", "tropical leaves"],
+      "occasions": ["birthday", "congratulations", "housewarming", "bold statement"],
+      "mood": ["bold", "exotic", "vibrant", "dramatic"],
+      "symbolism": "Bird of paradise represents freedom and joy. Protea symbolizes courage and transformation. An arrangement for someone who refuses to be ordinary.",
+      "description": "A dramatic and exotic statement bouquet for bold personalities. Bird of paradise and protea make this arrangement impossible to ignore. Perfect for a milestone birthday, a housewarming, or anyone who wants something completely unique.",
+      "size": "large",
+      "stem_count": 16,
+      "components": [
+        {"flower": "bird of paradise", "quantity": 3},
+        {"flower": "hot pink anthuriums", "quantity": 4},
+        {"flower": "orange protea", "quantity": 3},
+        {"flower": "tropical leaves", "quantity": 6}
+      ]
+    },
+    {
+      "id": "009",
+      "name": "Quiet Sympathy",
+      "price": 80,
+      "colors": ["white", "cream", "soft green"],
+      "flowers": ["white lilies", "cream roses", "white snapdragons", "greenery"],
+      "occasions": ["sympathy", "funeral", "condolences", "grief"],
+      "mood": ["peaceful", "respectful", "gentle", "somber"],
+      "symbolism": "White lilies represent the restored innocence of the soul. Cream roses symbolize reverence and remembrance. A dignified arrangement that honors loss with grace.",
+      "description": "A peaceful and dignified arrangement for moments of loss and remembrance. White lilies and cream roses create a serene, respectful bouquet that conveys heartfelt condolences without words. Appropriate for funerals or sending to a grieving family.",
+      "size": "large",
+      "stem_count": 22,
+      "components": [
+        {"flower": "white lilies", "quantity": 6},
+        {"flower": "cream roses", "quantity": 7},
+        {"flower": "white snapdragons", "quantity": 5},
+        {"flower": "greenery", "quantity": 4}
+      ]
+    },
+    {
+      "id": "010",
+      "name": "Spring Awakening",
+      "price": 60,
+      "colors": ["yellow", "purple", "white", "green"],
+      "flowers": ["daffodils", "purple hyacinths", "white tulips", "muscari"],
+      "occasions": ["easter", "spring birthday", "get well", "new beginnings"],
+      "mood": ["fresh", "cheerful", "optimistic", "lively"],
+      "symbolism": "Daffodils represent new beginnings and rebirth. Hyacinths symbolize playfulness and a joyful heart. The essence of spring captured in a bouquet.",
+      "description": "A vibrant celebration of spring with classic seasonal blooms. Daffodils, hyacinths, and tulips together create an unmistakably fresh and uplifting arrangement. Perfect for Easter, a spring birthday, or cheering someone up.",
+      "size": "medium",
+      "stem_count": 18,
+      "components": [
+        {"flower": "daffodils", "quantity": 5},
+        {"flower": "purple hyacinths", "quantity": 4},
+        {"flower": "white tulips", "quantity": 5},
+        {"flower": "muscari", "quantity": 4}
+      ]
+    },
+    {
+      "id": "011",
+      "name": "Wildflower Meadow",
+      "price": 55,
+      "colors": ["mixed", "yellow", "purple", "white", "pink"],
+      "flowers": ["cosmos", "cornflowers", "white daisies", "yarrow", "dried pampas grass"],
+      "occasions": ["birthday", "thank you", "just because", "bohemian wedding"],
+      "mood": ["carefree", "natural", "bohemian", "whimsical"],
+      "symbolism": "Cosmos represent order and harmony in diversity. Cornflowers symbolize delicacy and good luck. A bouquet that feels like it was picked from a sun-drenched meadow.",
+      "description": "A loose, wildflower-inspired bouquet for free spirits. Mixed meadow blooms arranged in a natural, unstructured style. Perfect for someone who prefers effortless beauty over formal arrangements, or a bohemian-themed celebration.",
+      "size": "medium",
+      "stem_count": 25,
+      "components": [
+        {"flower": "cosmos", "quantity": 6},
+        {"flower": "cornflowers", "quantity": 6},
+        {"flower": "white daisies", "quantity": 5},
+        {"flower": "yarrow", "quantity": 5},
+        {"flower": "dried pampas grass", "quantity": 3}
+      ]
+    },
+    {
+      "id": "012",
+      "name": "Rose Royale",
+      "price": 120,
+      "colors": ["deep pink", "blush", "white"],
+      "flowers": ["garden roses", "blush peonies", "white ranunculus", "dusty miller"],
+      "occasions": ["wedding", "anniversary", "luxury gift", "proposal"],
+      "mood": ["luxurious", "romantic", "timeless", "elegant"],
+      "symbolism": "Garden roses symbolize perfect happiness. Peonies represent a happy marriage and prosperity. The most romantic and luxurious bouquet in the collection.",
+      "description": "A lavish, garden-rose-forward bouquet that radiates luxury and romance. Full garden roses and blush peonies create an overflowing, opulent arrangement. The choice for a marriage proposal, a wedding day, or the most important anniversary.",
+      "size": "large",
+      "stem_count": 28,
+      "components": [
+        {"flower": "garden roses", "quantity": 10},
+        {"flower": "blush peonies", "quantity": 7},
+        {"flower": "white ranunculus", "quantity": 7},
+        {"flower": "dusty miller", "quantity": 4}
+      ]
+    },
+    {
+      "id": "013",
+      "name": "Cool Breeze",
+      "price": 65,
+      "colors": ["blue", "white", "silver"],
+      "flowers": ["blue delphinium", "white hydrangeas", "silver thistle", "white veronica"],
+      "occasions": ["congratulations", "new job", "get well", "thinking of you"],
+      "mood": ["calm", "refreshing", "clean", "serene"],
+      "symbolism": "Delphinium symbolizes big-heartedness and fun. Thistle represents resilience and determination. A crisp, refreshing arrangement for life's fresh starts.",
+      "description": "A cool and refreshing bouquet in blue and white tones. Clean, crisp, and calming -- perfect for a new job congratulation, a get well gift, or anyone who prefers understated elegance over bright florals.",
+      "size": "medium",
+      "stem_count": 18,
+      "components": [
+        {"flower": "blue delphinium", "quantity": 5},
+        {"flower": "white hydrangeas", "quantity": 4},
+        {"flower": "silver thistle", "quantity": 4},
+        {"flower": "white veronica", "quantity": 5}
+      ]
+    },
+    {
+      "id": "014",
+      "name": "Autumn Harvest",
+      "price": 75,
+      "colors": ["burnt orange", "burgundy", "rust", "deep yellow"],
+      "flowers": ["burgundy dahlias", "rust chrysanthemums", "orange roses", "dried cotton stems"],
+      "occasions": ["fall birthday", "thanksgiving", "housewarming", "harvest celebration"],
+      "mood": ["cozy", "warm", "rustic", "grounded"],
+      "symbolism": "Dahlias represent inner strength and creativity. Chrysanthemums symbolize longevity and joy. A bouquet that captures the warmth and richness of autumn.",
+      "description": "A rich, cozy autumn bouquet in deep harvest tones. Burgundy dahlias and rust chrysanthemums create a warm, rustic arrangement perfect for fall birthdays, Thanksgiving centerpieces, or anyone who loves the colors of the season.",
+      "size": "medium",
+      "stem_count": 20,
+      "components": [
+        {"flower": "burgundy dahlias", "quantity": 6},
+        {"flower": "rust chrysanthemums", "quantity": 6},
+        {"flower": "orange roses", "quantity": 5},
+        {"flower": "dried cotton stems", "quantity": 3}
+      ]
+    },
+    {
+      "id": "015",
+      "name": "Innocent Joy",
+      "price": 45,
+      "colors": ["white", "yellow", "green"],
+      "flowers": ["white daisies", "yellow button poms", "green trick dianthus", "lily grass"],
+      "occasions": ["child's birthday", "get well", "just because", "cheer up"],
+      "mood": ["playful", "happy", "simple", "cheerful"],
+      "symbolism": "Daisies represent innocence and purity. Yellow poms symbolize cheerfulness and friendship. The simplest and most genuinely happy arrangement.",
+      "description": "A simple, cheerful bouquet that puts a smile on any face. White daisies and yellow button poms are unpretentious and universally loved. Perfect for a child's birthday, cheering someone up, or a spontaneous just-because gesture.",
+      "size": "small",
+      "stem_count": 15,
+      "components": [
+        {"flower": "white daisies", "quantity": 6},
+        {"flower": "yellow button poms", "quantity": 5},
+        {"flower": "green trick dianthus", "quantity": 2},
+        {"flower": "lily grass", "quantity": 2}
+      ]
+    },
+    {
+      "id": "016",
+      "name": "Velvet Dusk",
+      "price": 100,
+      "colors": ["deep burgundy", "plum", "mauve"],
+      "flowers": ["burgundy calla lilies", "plum lisianthus", "mauve garden roses", "black baccara roses"],
+      "occasions": ["anniversary", "formal event", "romantic gesture", "opera night"],
+      "mood": ["dramatic", "sensual", "luxurious", "mysterious"],
+      "symbolism": "Black baccara roses represent obsession and deep desire. Plum lisianthus symbolizes a deep and lasting bond. A bouquet for the most intense and dramatic romantic moments.",
+      "description": "A dark and sensual bouquet for the most dramatic romantic gestures. Deep burgundy, plum, and mauve create a moody, luxurious arrangement. Perfect for a significant anniversary, a formal evening out, or someone with a taste for the theatrical.",
+      "size": "large",
+      "stem_count": 22,
+      "components": [
+        {"flower": "burgundy calla lilies", "quantity": 5},
+        {"flower": "plum lisianthus", "quantity": 6},
+        {"flower": "mauve garden roses", "quantity": 6},
+        {"flower": "black baccara roses", "quantity": 5}
+      ]
+    },
+    {
+      "id": "017",
+      "name": "Baby Steps",
+      "price": 60,
+      "colors": ["soft yellow", "white", "pale green"],
+      "flowers": ["white dendrobium orchids", "yellow mimosa", "white freesia", "soft ruscus"],
+      "occasions": ["new baby", "baby shower", "gender neutral", "welcome home"],
+      "mood": ["gentle", "pure", "delicate", "hopeful"],
+      "symbolism": "White orchids represent new life and purity. Mimosa symbolizes sensitivity and secret love. A tender arrangement to welcome a new life into the world.",
+      "description": "A soft and gentle bouquet to celebrate a new arrival. Gender-neutral yellow and white tones keep it universally appropriate. Delicate freesia adds a light fragrance. Perfect for a baby shower or hospital visit.",
+      "size": "small",
+      "stem_count": 16,
+      "components": [
+        {"flower": "white dendrobium orchids", "quantity": 4},
+        {"flower": "yellow mimosa", "quantity": 4},
+        {"flower": "white freesia", "quantity": 5},
+        {"flower": "soft ruscus", "quantity": 3}
+      ]
+    },
+    {
+      "id": "018",
+      "name": "Purple Reign",
+      "price": 80,
+      "colors": ["violet", "purple", "lavender"],
+      "flowers": ["violet roses", "purple statice", "lavender stock", "purple anemones"],
+      "occasions": ["birthday", "mother's day", "admiration", "purple lover"],
+      "mood": ["regal", "expressive", "creative", "bold"],
+      "symbolism": "Violet roses symbolize enchantment and love at first sight. Purple statice represents sympathy and success. A bouquet for someone who commands attention.",
+      "description": "An all-purple bouquet for those who love the color. Multiple shades of violet, purple, and lavender create a rich, textured arrangement. The obvious choice for a purple-lover's birthday or Mother's Day gift.",
+      "size": "medium",
+      "stem_count": 20,
+      "components": [
+        {"flower": "violet roses", "quantity": 6},
+        {"flower": "purple statice", "quantity": 5},
+        {"flower": "lavender stock", "quantity": 5},
+        {"flower": "purple anemones", "quantity": 4}
+      ]
+    },
+    {
+      "id": "019",
+      "name": "Modern Minimalist",
+      "price": 90,
+      "colors": ["white", "black", "green"],
+      "flowers": ["white calla lilies", "black mondo grass", "white anthurium", "architectural foliage"],
+      "occasions": ["housewarming", "corporate gift", "modern wedding", "design lover"],
+      "mood": ["minimal", "architectural", "clean", "contemporary"],
+      "symbolism": "Calla lilies represent magnificent beauty and refinement. Anthurium symbolizes hospitality and abundance. A bouquet designed for those who see flowers as art.",
+      "description": "A striking, architectural bouquet for modern aesthetic sensibilities. Clean white calla lilies and anthurium are offset by dark mondo grass for maximum contrast. Perfect for a design-forward housewarming, a corporate gift, or a minimalist wedding.",
+      "size": "medium",
+      "stem_count": 14,
+      "components": [
+        {"flower": "white calla lilies", "quantity": 5},
+        {"flower": "black mondo grass", "quantity": 3},
+        {"flower": "white anthurium", "quantity": 4},
+        {"flower": "architectural foliage", "quantity": 2}
+      ]
+    },
+    {
+      "id": "020",
+      "name": "Coral Sunrise",
+      "price": 65,
+      "colors": ["coral", "peach", "soft orange"],
+      "flowers": ["coral charm peonies", "peach tulips", "orange ranunculus", "peach sweet peas"],
+      "occasions": ["birthday", "congratulations", "mother's day", "summer celebration"],
+      "mood": ["fresh", "vibrant", "feminine", "optimistic"],
+      "symbolism": "Coral peonies represent prosperity and a happy life. Peach tulips symbolize caring and good wishes. The warmth and energy of a summer sunrise.",
+      "description": "A fresh and vibrant bouquet in warm coral and peach tones. Coral peonies are the star, supported by peach tulips and ranunculus in a harmonious summer palette. Perfect for a summer birthday or celebrating a big milestone.",
+      "size": "medium",
+      "stem_count": 20,
+      "components": [
+        {"flower": "coral charm peonies", "quantity": 5},
+        {"flower": "peach tulips", "quantity": 6},
+        {"flower": "orange ranunculus", "quantity": 5},
+        {"flower": "peach sweet peas", "quantity": 4}
+      ]
+    },
+    {
+      "id": "021",
+      "name": "Grandmother's Garden",
+      "price": 70,
+      "colors": ["dusty pink", "mauve", "sage green"],
+      "flowers": ["dusty pink roses", "mauve lisianthus", "sage eucalyptus", "dried strawflowers"],
+      "occasions": ["mother's day", "grandmother's birthday", "80th birthday", "appreciation"],
+      "mood": ["nostalgic", "tender", "classic", "warm"],
+      "symbolism": "Dusty pink roses represent grace and admiration. Strawflowers symbolize eternal memory and everlasting love. A bouquet that feels like a cherished memory.",
+      "description": "A tender, nostalgic bouquet with a vintage feel. Muted dusty pink and mauve tones with sage greenery create a timeless, classic arrangement. Perfect for Mother's Day, a grandmother's birthday, or expressing deep and lasting appreciation.",
+      "size": "medium",
+      "stem_count": 18,
+      "components": [
+        {"flower": "dusty pink roses", "quantity": 6},
+        {"flower": "mauve lisianthus", "quantity": 5},
+        {"flower": "sage eucalyptus", "quantity": 4},
+        {"flower": "dried strawflowers", "quantity": 3}
+      ]
+    },
+    {
+      "id": "022",
+      "name": "Citrus Burst",
+      "price": 55,
+      "colors": ["bright yellow", "lime green", "white"],
+      "flowers": ["yellow gerbera daisies", "white spray roses", "green button poms", "lime green trick dianthus"],
+      "occasions": ["get well", "cheer up", "birthday", "just because"],
+      "mood": ["energetic", "uplifting", "fun", "bright"],
+      "symbolism": "Yellow gerberas represent cheerfulness and innocence. Green dianthus symbolizes youthful energy and vitality. A bouquet designed to lift any mood instantly.",
+      "description": "A high-energy, mood-lifting bouquet in bright yellow and lime green. Gerbera daisies are universally cheerful, and the lime green accents add a fresh, modern twist. The go-to get well or cheer up bouquet.",
+      "size": "medium",
+      "stem_count": 18,
+      "components": [
+        {"flower": "yellow gerbera daisies", "quantity": 6},
+        {"flower": "white spray roses", "quantity": 5},
+        {"flower": "green button poms", "quantity": 4},
+        {"flower": "lime green trick dianthus", "quantity": 3}
+      ]
+    },
+    {
+      "id": "023",
+      "name": "Winter White",
+      "price": 85,
+      "colors": ["pure white", "ivory", "silver"],
+      "flowers": ["white roses", "ivory spray roses", "white amaryllis", "silver brunia berries"],
+      "occasions": ["christmas", "winter wedding", "new year", "sympathy"],
+      "mood": ["pure", "serene", "elegant", "wintry"],
+      "symbolism": "White roses represent purity and new beginnings. Amaryllis symbolizes splendid beauty and determination. The quiet elegance of a winter landscape.",
+      "description": "A crisp and elegant all-white bouquet for winter occasions. White roses and amaryllis create a classic, refined arrangement with a cool wintry feel. Perfect for Christmas, a winter wedding, or as a sophisticated sympathy bouquet.",
+      "size": "large",
+      "stem_count": 22,
+      "components": [
+        {"flower": "white roses", "quantity": 8},
+        {"flower": "ivory spray roses", "quantity": 6},
+        {"flower": "white amaryllis", "quantity": 4},
+        {"flower": "silver brunia berries", "quantity": 4}
+      ]
+    },
+    {
+      "id": "024",
+      "name": "Teacher's Pet",
+      "price": 50,
+      "colors": ["yellow", "orange", "red"],
+      "flowers": ["yellow sunflowers", "orange marigolds", "red gerberas", "golden solidago"],
+      "occasions": ["teacher appreciation", "end of school year", "graduation", "thank you"],
+      "mood": ["bright", "grateful", "warm", "celebratory"],
+      "symbolism": "Sunflowers represent loyalty and adoration. Marigolds symbolize warmth, creativity, and a bright future. A bouquet that says thank you with energy and color.",
+      "description": "A bright and grateful bouquet perfect for teacher appreciation or end-of-year celebrations. Bold yellow, orange, and red tones radiate warmth and energy. A cheerful way to say thank you to someone who has made a difference.",
+      "size": "small",
+      "stem_count": 15,
+      "components": [
+        {"flower": "yellow sunflowers", "quantity": 4},
+        {"flower": "orange marigolds", "quantity": 4},
+        {"flower": "red gerberas", "quantity": 4},
+        {"flower": "golden solidago", "quantity": 3}
+      ]
+    },
+    {
+      "id": "025",
+      "name": "The Proposal",
+      "price": 150,
+      "colors": ["red", "blush", "white", "gold"],
+      "flowers": ["red garden roses", "blush peonies", "white ranunculus", "gold-tipped eucalyptus"],
+      "occasions": ["marriage proposal", "engagement", "vow renewal", "most important moment"],
+      "mood": ["romantic", "luxurious", "momentous", "unforgettable"],
+      "symbolism": "Red roses are the ultimate declaration of love. Peonies represent a happy and prosperous marriage. Gold-tipped eucalyptus adds a touch of precious luxury to the most important question.",
+      "description": "The most luxurious bouquet in the collection, designed for the most important moment of a relationship. Full red garden roses, blush peonies, and gold-tipped eucalyptus create an unforgettable arrangement. When only the best will do.",
+      "size": "large",
+      "stem_count": 30,
+      "components": [
+        {"flower": "red garden roses", "quantity": 12},
+        {"flower": "blush peonies", "quantity": 8},
+        {"flower": "white ranunculus", "quantity": 6},
+        {"flower": "gold-tipped eucalyptus", "quantity": 4}
+      ]
+    },
+    {
+      "id": "026",
+      "name": "Zen Garden",
+      "price": 75,
+      "colors": ["white", "pale green", "natural"],
+      "flowers": ["white lotus flowers", "green cymbidium orchids", "bamboo stems", "white tulips"],
+      "occasions": ["meditation", "housewarming", "spa day gift", "mindfulness"],
+      "mood": ["peaceful", "balanced", "minimalist", "zen"],
+      "symbolism": "Lotus flowers represent spiritual awakening and purity of mind. Bamboo symbolizes strength, flexibility, and good fortune. An arrangement that brings calm to any space.",
+      "description": "A serene and balanced arrangement inspired by Japanese garden aesthetics. White lotus and green orchids with bamboo create a peaceful, sculptural display. Perfect for a meditation space, a spa gift, or a mindful housewarming.",
+      "size": "medium",
+      "stem_count": 14,
+      "components": [
+        {"flower": "white lotus flowers", "quantity": 3},
+        {"flower": "green cymbidium orchids", "quantity": 4},
+        {"flower": "bamboo stems", "quantity": 4},
+        {"flower": "white tulips", "quantity": 3}
+      ]
+    },
+    {
+      "id": "027",
+      "name": "Sweet Sixteen",
+      "price": 55,
+      "colors": ["hot pink", "purple", "white"],
+      "flowers": ["hot pink gerberas", "purple alstroemeria", "white spray roses", "pink waxflower"],
+      "occasions": ["sweet sixteen", "teen birthday", "graduation", "first milestone"],
+      "mood": ["fun", "youthful", "energetic", "celebratory"],
+      "symbolism": "Hot pink gerberas represent youthful energy and enthusiasm. Alstroemeria symbolizes friendship and mutual support. A bouquet that captures the excitement of being young.",
+      "description": "A fun and energetic bouquet for teenage celebrations. Hot pink and purple tones are vibrant without being childish, perfect for a Sweet Sixteen or teen birthday. Alstroemeria adds long-lasting color and texture.",
+      "size": "medium",
+      "stem_count": 18,
+      "components": [
+        {"flower": "hot pink gerberas", "quantity": 5},
+        {"flower": "purple alstroemeria", "quantity": 6},
+        {"flower": "white spray roses", "quantity": 4},
+        {"flower": "pink waxflower", "quantity": 3}
+      ]
+    },
+    {
+      "id": "028",
+      "name": "He Said Yes",
+      "price": 90,
+      "colors": ["white", "gold", "champagne"],
+      "flowers": ["white garden roses", "champagne spray roses", "white lisianthus", "gold solidago"],
+      "occasions": ["engagement", "bridal shower", "bachelorette", "wedding morning"],
+      "mood": ["celebratory", "elegant", "joyful", "bridal"],
+      "symbolism": "White roses represent pure love and new beginnings. Champagne roses symbolize celebration and life's precious moments. A toast in floral form.",
+      "description": "A celebratory bouquet for the beginning of a forever. White and champagne tones with gold accents create a sophisticated, bridal feel. Perfect for announcing an engagement, a bridal shower, or the morning of a wedding.",
+      "size": "large",
+      "stem_count": 24,
+      "components": [
+        {"flower": "white garden roses", "quantity": 8},
+        {"flower": "champagne spray roses", "quantity": 7},
+        {"flower": "white lisianthus", "quantity": 6},
+        {"flower": "gold solidago", "quantity": 3}
+      ]
+    },
+    {
+      "id": "029",
+      "name": "Forest Floor",
+      "price": 70,
+      "colors": ["deep green", "burgundy", "brown"],
+      "flowers": ["burgundy scabiosa", "dark green hellebores", "dried ferns", "pinecone accents"],
+      "occasions": ["winter birthday", "dark aesthetic", "unique gift", "nature lover"],
+      "mood": ["earthy", "moody", "unique", "organic"],
+      "symbolism": "Scabiosa represents an unfortunate love and purity. Hellebores symbolize serenity and tranquility. An arrangement for those who find beauty in the unconventional.",
+      "description": "A dark and earthy bouquet for unconventional tastes. Burgundy scabiosa and deep green hellebores with dried ferns create a moody, organic arrangement unlike anything else. For the person who says they don't like flowers -- until they see this.",
+      "size": "medium",
+      "stem_count": 16,
+      "components": [
+        {"flower": "burgundy scabiosa", "quantity": 5},
+        {"flower": "dark green hellebores", "quantity": 4},
+        {"flower": "dried ferns", "quantity": 5},
+        {"flower": "pinecone accents", "quantity": 2}
+      ]
+    },
+    {
+      "id": "030",
+      "name": "Best Friend Forever",
+      "price": 60,
+      "colors": ["yellow", "pink", "orange", "white"],
+      "flowers": ["yellow sunflowers", "pink alstroemeria", "orange spray roses", "white daisies"],
+      "occasions": ["friendship", "galentine's day", "best friend birthday", "just because"],
+      "mood": ["fun", "warm", "genuine", "celebratory"],
+      "symbolism": "Alstroemeria is specifically known as the flower of friendship and devotion. Sunflowers represent loyalty and warmth. A bouquet that celebrates the people who feel like home.",
+      "description": "A joyful mixed bouquet that celebrates friendship in full color. Yellow, pink, and orange together create a genuinely happy arrangement with no pretension. Perfect for a best friend's birthday, Galentine's Day, or just because they deserve flowers.",
+      "size": "medium",
+      "stem_count": 20,
+      "components": [
+        {"flower": "yellow sunflowers", "quantity": 5},
+        {"flower": "pink alstroemeria", "quantity": 6},
+        {"flower": "orange spray roses", "quantity": 5},
+        {"flower": "white daisies", "quantity": 4}
+      ]
+    }
+  ]
+}
