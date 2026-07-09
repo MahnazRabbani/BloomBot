@@ -8,13 +8,28 @@ from __future__ import annotations
 
 import httpx
 import openai
+import pytest
 from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
-from app.main import app
+from app.main import app, limiter
 
 client = TestClient(app)
+
+
+@pytest.fixture(autouse=True)
+def _disable_rate_limit():
+    """Disable rate limiting for every test by default.
+
+    slowapi's counter is in-memory and shared across the whole app instance,
+    so without this, requests from unrelated tests would accumulate against the
+    same per-IP limit and cause flaky 429s. The dedicated 429 test re-enables
+    the limiter itself.
+    """
+    limiter.enabled = False
+    yield
+    limiter.enabled = True
 
 
 def _make_openai_error(error_cls, message: str):
@@ -106,3 +121,21 @@ def test_recommend_auth_error_returns_generic_500():
     assert detail == "Internal server error."
     # The real auth failure must not be exposed to the client.
     assert "invalid api key" not in detail
+
+
+def test_recommend_exceeds_rate_limit_returns_429():
+    # Re-enable the limiter (the autouse fixture disabled it) and clear any
+    # prior counts so this test starts from a clean per-IP window.
+    limiter.enabled = True
+    limiter.reset()
+
+    with patch("app.main.recommend", return_value="ok"):
+        # The first 10 requests in the window are allowed.
+        for i in range(10):
+            response = client.post("/recommend", json={"query": "flowers"})
+            assert response.status_code == 200, f"request {i + 1} unexpectedly blocked"
+
+        # The 11th exceeds the 10/minute limit.
+        response = client.post("/recommend", json={"query": "flowers"})
+
+    assert response.status_code == 429
