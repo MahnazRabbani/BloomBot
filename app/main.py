@@ -11,7 +11,7 @@ import logging
 
 import openai
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from app.chain import recommend
 
@@ -25,7 +25,20 @@ app = FastAPI(
 
 
 class RecommendRequest(BaseModel):
-    query: str = Field(..., description="The customer's natural-language request.")
+    query: str = Field(
+        ...,
+        min_length=1,
+        max_length=500,
+        description="The customer's natural-language request.",
+    )
+
+    @field_validator("query")
+    @classmethod
+    def _not_blank(cls, v: str) -> str:
+        # min_length only counts characters; reject whitespace-only queries too.
+        if not v.strip():
+            raise ValueError("query must not be blank")
+        return v
 
 
 class RecommendResponse(BaseModel):
@@ -41,12 +54,9 @@ def health_check() -> dict:
 @app.post("/recommend", response_model=RecommendResponse)
 def recommend_bouquet(request: RecommendRequest) -> RecommendResponse:
     """Return an AI-generated bouquet recommendation for the customer's query."""
-    query = request.query.strip()
-    if not query:
-        raise HTTPException(status_code=422, detail="query must not be empty")
-
+    # Length limits (1-500 chars) are enforced by RecommendRequest validation.
     try:
-        recommendation = recommend(query)
+        recommendation = recommend(request.query)
     except openai.RateLimitError as exc:
         # Transient upstream capacity issue — ask the caller to retry later.
         # No internal details are exposed in the response.

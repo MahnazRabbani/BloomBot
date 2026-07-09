@@ -38,9 +38,29 @@ def test_recommend_valid_query_returns_200():
 
 
 def test_recommend_empty_query_returns_422():
-    # recommend() should never be reached for an empty query.
+    # An empty query fails Pydantic min_length validation before the handler
+    # runs, so recommend() is never reached.
+    with patch("app.main.recommend") as mock_recommend:
+        response = client.post("/recommend", json={"query": ""})
+
+    assert response.status_code == 422
+    mock_recommend.assert_not_called()
+
+
+def test_recommend_whitespace_only_query_returns_422():
+    # A whitespace-only query passes min_length but is rejected by the
+    # field validator, so recommend() is never reached.
     with patch("app.main.recommend") as mock_recommend:
         response = client.post("/recommend", json={"query": "   "})
+
+    assert response.status_code == 422
+    mock_recommend.assert_not_called()
+
+
+def test_recommend_query_too_long_returns_422():
+    # A query over the 500-char max fails Pydantic validation.
+    with patch("app.main.recommend") as mock_recommend:
+        response = client.post("/recommend", json={"query": "a" * 501})
 
     assert response.status_code == 422
     mock_recommend.assert_not_called()
