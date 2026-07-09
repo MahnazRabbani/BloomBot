@@ -77,4 +77,7 @@ def recommend(query: str) -> str:
             {"role": "user", "content": _build_user_prompt(query, bouquets)},
         ],
     )
-    return response.choices[0].message.content
+    content = response.choices[0].message.content
+    if content is None:
+        raise RuntimeError("LLM returned no content")
+    return content

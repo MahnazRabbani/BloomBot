@@ -74,6 +74,10 @@ def build_metadata(bouquet: dict) -> dict:
 
 
 def load_bouquets() -> list[dict]:
+    """Load and return the bouquet records from the catalog JSON file.
+
+    Raises ``ValueError`` if the catalog contains no bouquets.
+    """
     with CATALOG_PATH.open(encoding="utf-8") as f:
         data = json.load(f)
     bouquets = data["bouquets"]
@@ -89,6 +93,12 @@ def embed_texts(client: OpenAI, texts: list[str]) -> list[list[float]]:
 
 
 def ingest() -> None:
+    """Embed the full catalog and (re)build the persistent ``bouquets`` collection.
+
+    Reads the catalog, embeds every bouquet in one batch, and writes the vectors
+    plus metadata to ChromaDB. The collection is recreated from scratch so the
+    operation is idempotent across re-runs.
+    """
     load_dotenv()
 
     bouquets = load_bouquets()
@@ -104,7 +114,8 @@ def ingest() -> None:
 
     chroma_client = chromadb.PersistentClient(path=str(CHROMA_DIR))
     # Recreate the collection so re-runs stay idempotent instead of appending
-    # duplicates.
+    # duplicates. get_or_create first guarantees the collection exists, since
+    # delete_collection raises if it does not (e.g. on the very first run).
     chroma_client.get_or_create_collection(name=COLLECTION_NAME)
     chroma_client.delete_collection(name=COLLECTION_NAME)
     collection = chroma_client.create_collection(name=COLLECTION_NAME)

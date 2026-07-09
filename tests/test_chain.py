@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock, patch
 
+import pytest
+
 from app.chain import _format_context, recommend
 
 
@@ -72,6 +74,18 @@ def test_recommend_handles_empty_retrieval():
     sent_messages = openai_mock.chat.completions.create.call_args.kwargs["messages"]
     user_content = sent_messages[-1]["content"]
     assert "No bouquets were found" in user_content
+
+
+def test_recommend_raises_when_llm_returns_no_content():
+    # The OpenAI API may return message.content == None; recommend() should
+    # fail loudly rather than return None for its declared -> str signature.
+    openai_mock = _make_openai_mock(content=None)
+
+    with patch("app.chain.load_dotenv"), patch(
+        "app.chain.retrieve", return_value=SAMPLE_BOUQUETS
+    ), patch("app.chain.OpenAI", return_value=openai_mock):
+        with pytest.raises(RuntimeError, match="LLM returned no content"):
+            recommend("something cheerful")
 
 
 def test_format_context_empty_input_does_not_crash():
