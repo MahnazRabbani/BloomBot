@@ -1,5 +1,7 @@
 # BloomBot
 
+![Tests](https://github.com/MahnazRabbani/BloomBot/actions/workflows/tests.yml/badge.svg)
+
 An AI-powered bouquet recommendation API. Describe what you need in natural language, get back a personalized flower recommendation grounded in a real product catalog.
 
 **Live demo:** https://bloombot-ifh6.onrender.com/docs
@@ -124,4 +126,4 @@ This ensures the API never leaks internal exception messages, stack traces, or c
 
 ## Project status
 
-Phase 1 (MVP) and Phase 2 (production quality: testing, error handling, input validation, rate limiting, code cleanup) complete. See `/docs` for phase-by-phase learning notes and design decisions.
+Phase 1 (MVP) and Phase 2 (production quality: testing, error handling, input validation, rate limiting, code cleanup) and Phase 3 (CI/CD) complete. See `/docs` for phase-by-phase learning notes and design decisions.
