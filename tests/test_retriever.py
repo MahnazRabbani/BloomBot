@@ -56,11 +56,14 @@ def test_valid_query_returns_parsed_bouquets():
     with patch("app.retriever.load_dotenv"), patch(
         "app.retriever.OpenAI", return_value=_make_openai_mock()
     ), patch("app.retriever.chromadb", _make_chroma_mock(collection)):
-        results = retrieve("something cheerful for a birthday", k=2)
+        result = retrieve("something cheerful for a birthday", k=2)
 
-    assert results == [bouquet_a, bouquet_b]
+    assert result["results"] == [bouquet_a, bouquet_b]
     # Full nested dicts are returned, not the flattened metadata strings.
-    assert all(isinstance(r, dict) for r in results)
+    assert all(isinstance(r, dict) for r in result["results"])
+    # Timing is reported and non-negative.
+    assert isinstance(result["retrieval_time_ms"], float)
+    assert result["retrieval_time_ms"] >= 0
     collection.query.assert_called_once()
 
 
@@ -71,9 +74,10 @@ def test_k_zero_returns_empty_list():
     with patch("app.retriever.load_dotenv"), patch(
         "app.retriever.OpenAI", return_value=_make_openai_mock()
     ), patch("app.retriever.chromadb", _make_chroma_mock(collection)):
-        results = retrieve("anything", k=0)  # ...but caller asked for 0
+        result = retrieve("anything", k=0)  # ...but caller asked for 0
 
-    assert results == []
+    assert result["results"] == []
+    assert isinstance(result["retrieval_time_ms"], float)
     collection.query.assert_not_called()
 
 
@@ -84,7 +88,8 @@ def test_empty_collection_returns_empty_list():
     with patch("app.retriever.load_dotenv"), patch(
         "app.retriever.OpenAI", return_value=_make_openai_mock()
     ), patch("app.retriever.chromadb", _make_chroma_mock(collection)):
-        results = retrieve("anything", k=4)
+        result = retrieve("anything", k=4)
 
-    assert results == []
+    assert result["results"] == []
+    assert isinstance(result["retrieval_time_ms"], float)
     collection.query.assert_not_called()

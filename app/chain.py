@@ -8,6 +8,8 @@ set so it can never invent bouquets that are not in the catalog.
 
 from __future__ import annotations
 
+import time
+
 from dotenv import load_dotenv
 from openai import OpenAI
 
@@ -62,13 +64,28 @@ def _build_user_prompt(query: str, bouquets: list[dict]) -> str:
     )
 
 
-def recommend(query: str) -> str:
-    """Retrieve candidate bouquets and return an LLM-written recommendation."""
+def recommend(query: str) -> dict:
+    """Retrieve candidate bouquets and return an LLM-written recommendation.
+
+    Returns a dict carrying both the recommendation text and per-request
+    observability metadata:
+
+    - ``recommendation``: the model's written reply.
+    - ``prompt_tokens`` / ``completion_tokens`` / ``total_tokens``: token usage
+      reported by the OpenAI API.
+    - ``llm_time_ms``: wall-clock time spent on the chat completion call.
+    - ``retrieved_ids``: ids of the bouquets fed to the model as context.
+    - ``retrieval_time_ms``: wall-clock time spent in retrieval.
+    """
     load_dotenv()
 
-    bouquets = retrieve(query, k=4)
+    retrieval = retrieve(query, k=4)
+    bouquets = retrieval["results"]
+    retrieval_time_ms = retrieval["retrieval_time_ms"]
+    retrieved_ids = [b["id"] for b in bouquets if "id" in b]
 
     client = OpenAI()
+    llm_start = time.perf_counter()
     response = client.chat.completions.create(
         model=CHAT_MODEL,
         temperature=TEMPERATURE,
@@ -77,7 +94,19 @@ def recommend(query: str) -> str:
             {"role": "user", "content": _build_user_prompt(query, bouquets)},
         ],
     )
+    llm_time_ms = (time.perf_counter() - llm_start) * 1000
+
     content = response.choices[0].message.content
     if content is None:
         raise RuntimeError("LLM returned no content")
-    return content
+
+    usage = response.usage
+    return {
+        "recommendation": content,
+        "prompt_tokens": usage.prompt_tokens,
+        "completion_tokens": usage.completion_tokens,
+        "total_tokens": usage.total_tokens,
+        "llm_time_ms": llm_time_ms,
+        "retrieved_ids": retrieved_ids,
+        "retrieval_time_ms": retrieval_time_ms,
+    }
