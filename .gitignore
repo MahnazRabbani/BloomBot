@@ -11,3 +11,7 @@ __pycache__/
 
 # ChromaDB local store
 chroma_db/chroma.sqlite3
+
+# Eval run output
+evals/retrieval_results.json
+evals/e2e_results.json
