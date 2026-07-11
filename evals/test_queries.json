@@ -1,0 +1,155 @@
+{
+  "description": "Evaluation test set for BloomBot retrieval quality. Each query has manually curated expected_ids representing bouquets from app/catalog.json that are correct matches. Used to measure precision and recall of the retrieval pipeline.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "My mom's 60th birthday, she loves purple",
+      "expected_ids": ["005", "018"],
+      "category": "occasion"
+    },
+    {
+      "id": "q02",
+      "query": "Something for Valentine's Day for my girlfriend",
+      "expected_ids": ["004", "025"],
+      "category": "occasion"
+    },
+    {
+      "id": "q03",
+      "query": "I need flowers for a funeral",
+      "expected_ids": ["009", "023"],
+      "category": "occasion"
+    },
+    {
+      "id": "q04",
+      "query": "My best friend is having a baby",
+      "expected_ids": ["017", "006"],
+      "category": "occasion"
+    },
+    {
+      "id": "q05",
+      "query": "Teacher appreciation gift for end of school year",
+      "expected_ids": ["024"],
+      "category": "occasion"
+    },
+    {
+      "id": "q06",
+      "query": "Anniversary gift for my wife, 10 years together",
+      "expected_ids": ["004", "012", "016"],
+      "category": "occasion"
+    },
+    {
+      "id": "q07",
+      "query": "Something purple and elegant",
+      "expected_ids": ["002", "005", "018"],
+      "category": "aesthetic"
+    },
+    {
+      "id": "q08",
+      "query": "Bright and cheerful flowers to lift someone's mood",
+      "expected_ids": ["001", "015", "022"],
+      "category": "aesthetic"
+    },
+    {
+      "id": "q09",
+      "query": "I want something dark and moody, not traditional",
+      "expected_ids": ["016", "029"],
+      "category": "aesthetic"
+    },
+    {
+      "id": "q10",
+      "query": "Minimalist modern flowers for a design-conscious friend",
+      "expected_ids": ["019"],
+      "category": "aesthetic"
+    },
+    {
+      "id": "q11",
+      "query": "Something that looks like wildflowers picked from a meadow",
+      "expected_ids": ["011"],
+      "category": "aesthetic"
+    },
+    {
+      "id": "q12",
+      "query": "Cheapest bouquet you have, under $50",
+      "expected_ids": ["007", "015", "024"],
+      "category": "constraint"
+    },
+    {
+      "id": "q13",
+      "query": "Birthday flowers, budget around $80",
+      "expected_ids": ["005", "014", "018"],
+      "category": "constraint"
+    },
+    {
+      "id": "q14",
+      "query": "I need something really big and impressive, this is a big deal",
+      "expected_ids": ["002", "008", "012", "025"],
+      "category": "constraint"
+    },
+    {
+      "id": "q15",
+      "query": "Romantic flowers under $70, no roses please",
+      "expected_ids": ["003"],
+      "category": "multi_constraint"
+    },
+    {
+      "id": "q16",
+      "query": "Something for a spring birthday in pastel colors",
+      "expected_ids": ["003", "007", "010"],
+      "category": "multi_constraint"
+    },
+    {
+      "id": "q17",
+      "query": "Corporate gift that looks sophisticated, not too floral",
+      "expected_ids": ["013", "019"],
+      "category": "multi_constraint"
+    },
+    {
+      "id": "q18",
+      "query": "Purple flowers for Mother's Day, around $80",
+      "expected_ids": ["018"],
+      "category": "multi_constraint"
+    },
+    {
+      "id": "q19",
+      "query": "Something nice for a friend",
+      "expected_ids": ["001", "011", "030"],
+      "category": "vague"
+    },
+    {
+      "id": "q20",
+      "query": "I don't know what to get, just something pretty",
+      "expected_ids": ["003", "007", "020"],
+      "category": "vague"
+    },
+    {
+      "id": "q21",
+      "query": "Flowers for someone who says they don't like flowers",
+      "expected_ids": ["019", "029"],
+      "category": "vague"
+    },
+    {
+      "id": "q22",
+      "query": "My grandmother passed away yesterday",
+      "expected_ids": ["009"],
+      "category": "edge_case"
+    },
+    {
+      "id": "q23",
+      "query": "Something for a teenager's birthday",
+      "expected_ids": ["007", "027"],
+      "category": "edge_case"
+    },
+    {
+      "id": "q24",
+      "query": "I'm proposing to my partner this weekend",
+      "expected_ids": ["012", "025"],
+      "category": "edge_case"
+    },
+    {
+      "id": "q25",
+      "query": "Flowers for a bohemian outdoor wedding",
+      "expected_ids": ["003", "011"],
+      "category": "edge_case"
+    }
+  ]
+}
