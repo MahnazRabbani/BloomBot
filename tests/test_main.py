@@ -18,6 +18,19 @@ from app.main import app, limiter
 client = TestClient(app)
 
 
+def _recommend_result(recommendation: str = "I recommend the Sunset Garden!") -> dict:
+    """A recommend() stand-in return value with the full metadata shape."""
+    return {
+        "recommendation": recommendation,
+        "prompt_tokens": 120,
+        "completion_tokens": 45,
+        "total_tokens": 165,
+        "llm_time_ms": 12.3,
+        "retrieved_ids": ["001", "004"],
+        "retrieval_time_ms": 4.5,
+    }
+
+
 @pytest.fixture(autouse=True)
 def _disable_rate_limit():
     """Disable rate limiting for every test by default.
@@ -45,10 +58,12 @@ def _make_openai_error(error_cls, message: str):
 
 
 def test_recommend_valid_query_returns_200():
-    with patch("app.main.recommend", return_value="I recommend the Sunset Garden!"):
+    with patch("app.main.recommend", return_value=_recommend_result()):
         response = client.post("/recommend", json={"query": "cheerful birthday flowers"})
 
     assert response.status_code == 200
+    # The API response shape is unchanged: only the recommendation text is
+    # returned to the client, never the internal observability metadata.
     assert response.json() == {"recommendation": "I recommend the Sunset Garden!"}
 
 
@@ -123,13 +138,51 @@ def test_recommend_auth_error_returns_generic_500():
     assert "invalid api key" not in detail
 
 
+def test_recommend_logs_structured_success_entry():
+    with patch("app.main.recommend", return_value=_recommend_result()), patch(
+        "app.main.obs_logger"
+    ) as mock_logger:
+        response = client.post("/recommend", json={"query": "cheerful flowers"})
+
+    assert response.status_code == 200
+    mock_logger.info.assert_called_once()
+    fields = mock_logger.info.call_args.kwargs["extra"]
+    assert fields["status"] == "success"
+    assert fields["error_type"] is None
+    assert fields["query"] == "cheerful flowers"
+    assert fields["retrieved_ids"] == ["001", "004"]
+    assert fields["prompt_tokens"] == 120
+    assert fields["total_tokens"] == 165
+    assert isinstance(fields["total_time_ms"], float)
+    # The recommendation is truncated to at most 200 chars for logging.
+    assert len(fields["recommendation"]) <= 200
+
+
+def test_recommend_logs_structured_error_entry():
+    error = RuntimeError("OpenAI is down")
+    with patch("app.main.recommend", side_effect=error), patch(
+        "app.main.obs_logger"
+    ) as mock_logger:
+        response = client.post("/recommend", json={"query": "anything"})
+
+    assert response.status_code == 500
+    mock_logger.info.assert_called_once()
+    fields = mock_logger.info.call_args.kwargs["extra"]
+    assert fields["status"] == "error"
+    assert fields["error_type"] == "RuntimeError"
+    # No recommendation/metadata on the error path.
+    assert fields["recommendation"] is None
+    assert fields["retrieved_ids"] is None
+    assert fields["total_tokens"] is None
+
+
 def test_recommend_exceeds_rate_limit_returns_429():
     # Re-enable the limiter (the autouse fixture disabled it) and clear any
     # prior counts so this test starts from a clean per-IP window.
     limiter.enabled = True
     limiter.reset()
 
-    with patch("app.main.recommend", return_value="ok"):
+    with patch("app.main.recommend", return_value=_recommend_result("ok")):
         # The first 10 requests in the window are allowed.
         for i in range(10):
             response = client.post("/recommend", json={"query": "flowers"})
