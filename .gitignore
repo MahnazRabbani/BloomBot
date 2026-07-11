@@ -1,3 +1,13 @@
 .venv
 .env
 .env.save
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# ChromaDB local store
+chroma_db/chroma.sqlite3
