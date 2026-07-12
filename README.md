@@ -39,6 +39,8 @@ The catalog (30 bouquets) is embedded once at ingestion time and stored in a per
 - **Rate limiting:** slowapi
 - **Containerization:** Docker
 - **Deployment:** Render
+- **Logging:** python-json-logger (structured JSON logging)
+- **Evaluation:** Custom retrieval + LLM-as-judge pipelines, gpt-4o as judge model
 
 ## Running locally
 
@@ -108,10 +110,10 @@ Health check. Returns `{ "status": "ok", "service": "BloomBot" }`.
 pytest -v
 ```
 
-18 tests covering:
+21 tests covering:
 - Unit tests for the retriever (semantic search, empty query/collection handling)
-- Unit tests for the RAG chain (prompt construction, empty retrieval fallback, malformed LLM response handling)
-- Integration tests for the FastAPI endpoint (validation, rate limiting, error handling, no internal detail leakage on failure)
+- Unit tests for the RAG chain (prompt construction, empty retrieval fallback, malformed LLM response handling, metadata surfacing)
+- Integration tests for the FastAPI endpoint (validation, rate limiting, error handling, no internal detail leakage on failure, structured log emission on success and error paths)
 
 All external dependencies (OpenAI, ChromaDB) are mocked, so the suite runs in under 2 seconds with no network calls or API cost.
 
@@ -124,6 +126,36 @@ The `/recommend` endpoint distinguishes between failure types rather than treati
 
 This ensures the API never leaks internal exception messages, stack traces, or configuration details to callers.
 
+## Observability
+
+Every `/recommend` request emits a structured JSON log line capturing:
+- Query text and response (truncated)
+- Retrieval and LLM latency, broken out separately
+- Token usage (prompt, completion, total)
+- Retrieved bouquet IDs
+- Success/error status and error type
+
+Logs are machine-parseable for aggregation. A utility script summarizes them:
+
+```bash
+cat logs.json | python scripts/analyze_logs.py
+```
+
+This reports request counts, error rates, latency distributions (mean/median/p95/max), per-request token usage, and estimated OpenAI cost.
+
+## Evaluation
+
+The system includes two offline evaluation pipelines that measure retrieval quality and end-to-end response quality independently.
+
+**Retrieval evaluation** (`python -m evals.eval_retrieval`): runs 25 curated queries against the real vector store and scores precision, recall, and F1 against manually assigned ground-truth bouquet IDs. Current baseline: macro recall 0.81, precision 0.41, F1 0.52. Precision is bounded by the retrieval window (k=4) and the number of expected matches per query; recall is the more informative metric at this stage.
+
+**End-to-end evaluation** (`python -m evals.eval_e2e`): runs the same 25 queries through the full RAG pipeline, then uses gpt-4o as an LLM judge to score each response on relevance, grounding, explanation quality, completeness, and tone (1-5 scale). Current baseline: 4.98/5.00 overall.
+
+The near-perfect e2e scores alongside imperfect retrieval scores illustrate a known limitation of LLM-as-judge evaluation: fluent generation can mask retrieval failures. A query that retrieves the wrong bouquets will still produce a polished, well-structured recommendation about those wrong bouquets, and the judge scores it highly. This is why both evaluations exist and must be read together.
+
+Test queries are categorized by type (occasion, aesthetic, constraint, multi-constraint, vague, edge case). The weakest retrieval category is constraint-based queries (e.g. price filtering), which is expected: semantic search encodes meaning but has no mechanism for numerical constraints. Addressing this would require hybrid retrieval (metadata filtering + vector search).
+
+
 ## Project status
 
-Phase 1 (MVP) and Phase 2 (production quality: testing, error handling, input validation, rate limiting, code cleanup) and Phase 3 (CI/CD) complete. See `/docs` for phase-by-phase learning notes and design decisions.
+Phases 1-4 complete: MVP, production quality (testing, error handling, input validation, rate limiting), CI/CD, and monitoring + evaluation. See `/docs` for phase-by-phase learning notes and design decisions.

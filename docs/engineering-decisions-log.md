@@ -74,6 +74,39 @@ Removing the "redundant-looking" manual blank-query check during the Pydantic mi
 CI runs the full suite on a clean VM per run, which validates the same class of problem Docker solves for runtime — environment-dependent success — but for verification rather than execution. Branch protection was only enabled after the CI check existed, since a required check has no meaning without something to require. The full loop (branch → PR → passing check → merge) was exercised at least once post-setup to confirm protection actually gates merges rather than only appearing configured.
 
 ---
+## Phase 4 — Monitoring + Evaluation
+
+**Scope:** Structured per-request logging, retrieval quality evaluation (precision/recall/F1), end-to-end LLM-as-judge evaluation, log analysis utility.
+
+### Decisions
+
+| Decision | Rationale |
+|---|---|
+| `python-json-logger` for structured logging, not a managed observability platform (Datadog, LangSmith) | Demonstrates understanding of what to measure and why; a managed platform adds cost and setup without adding portfolio signal. Other options: LangSmith (LangChain-coupled, not in our stack), Datadog/Grafana (production-grade but overkill for a demo deployment), OpenTelemetry (standard but heavier setup) |
+| Separate `bloombot` JSON logger alongside the existing stdlib logger | Operator-facing error messages (human-readable) and machine-parseable observability data serve different consumers; merging them forces a format compromise. In a larger system, everything would be JSON for uniform aggregation |
+| `time.perf_counter()` for latency measurement | Monotonic clock with the highest available resolution; immune to system clock adjustments, unlike `time.time()` |
+| Return metadata dict from `recommend()` and `retrieve()` instead of logging inside those functions | Keeps logging concerns in the API layer (`main.py`), not the domain logic; the functions remain testable without log-capture fixtures |
+| 25-query eval test set with manual ground-truth IDs, not auto-generated | Ground truth must reflect human judgment about what bouquets genuinely fit a query; automated assignment would just replicate the retriever's own biases |
+| Retrieval eval and e2e eval as separate standalone scripts, not pytest tests | They make real API calls, cost money, and take minutes to run; mixing them with the fast, free, mocked unit suite would discourage running tests frequently |
+| `gpt-4o` as the LLM judge, not `gpt-4o-mini` | The judge should be at least as capable as the model being evaluated (`gpt-4o-mini`); using the same model to judge itself would conflate generation quality with evaluation quality. Other options: Claude (cross-provider judging, adds a second API key), human evaluation (gold standard but not repeatable or automatable) |
+| Judge temperature 0 | Maximizes scoring consistency across runs; creative variation in a rubric evaluator introduces noise |
+
+### System design
+
+Observability is structured as a single JSON log line per request, emitted in `main.py` after every exit path (success and all error branches). The `_log_request()` helper guarantees no request is silently dropped from metrics. Fields capture timing at two granularities (retrieval vs. LLM, plus total), token usage from the OpenAI response object, and the IDs of retrieved bouquets for post-hoc retrieval debugging. The client-facing API response shape is unchanged; all observability data is internal.
+
+Evaluation separates retrieval quality from generation quality because they fail independently. Retrieval eval uses set-based precision/recall/F1 against ground-truth IDs. E2e eval uses an LLM judge scoring five criteria on a 1-5 ordinal scale, macro-averaged per criterion.
+
+### Key findings
+
+Retrieval baseline: macro recall 0.81, precision 0.41, F1 0.52. Recall is strong (the right bouquet appears in the top 4 for most queries). Precision is structurally bounded (queries with 1 expected ID can never exceed 0.25 precision at k=4). The complete failure case is q13 ("birthday flowers, budget around $80"): retriever returned zero correct bouquets because semantic search has no mechanism for numerical constraints like price.
+
+E2e baseline: 4.98/5.00 overall. Near-perfect scores across all five criteria. The critical insight: q13 scored 5/5 on the e2e eval despite 0/0/0 on retrieval. The LLM wrote a fluent, well-structured recommendation about the wrong bouquets, and the judge rated it highly. This demonstrates that fluent generation masks retrieval failures, and evaluation pipelines must assess both stages independently.
+
+Category-level pattern: aesthetic queries perform best on retrieval (embeddings excel at mood/color language). Constraint queries perform worst (price, size, exclusions are structured filters, not semantic concepts). This directly motivates hybrid retrieval (metadata filtering + vector search) as a future improvement.
+
+### Notes
+The `retrieve()` and `recommend()` return types changed from simple values to dicts carrying metadata. This is a mild API contract break, caught and updated across all callers and tests in the same commit. In a multi-team codebase, this would warrant a deprecation path; in a single-developer project, a single atomic commit is sufficient.
 
 ## Open items carried forward
 - Redis-backed rate limiting if the service moves beyond a single instance
