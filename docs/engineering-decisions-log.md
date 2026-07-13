@@ -1,6 +1,6 @@
 # Engineering Decisions Log
 
-Design rationale and tradeoffs for BloomBot, phases 1-3. Updated per phase.
+Design rationale and tradeoffs for BloomBot. Updated per phase.
 
 ---
 
@@ -107,6 +107,33 @@ Category-level pattern: aesthetic queries perform best on retrieval (embeddings 
 
 ### Notes
 The `retrieve()` and `recommend()` return types changed from simple values to dicts carrying metadata. This is a mild API contract break, caught and updated across all callers and tests in the same commit. In a multi-team codebase, this would warrant a deprecation path; in a single-developer project, a single atomic commit is sufficient.
+
+## Phase 5 — UI
+
+**Scope:** A demo-able chat interface for BloomBot, deployed independently and calling the existing API over HTTP.
+
+### Decisions
+
+| Decision | Rationale |
+|---|---|
+| Streamlit for the UI | Python-native (no separate frontend toolchain), built-in chat components (`st.chat_message`/`st.chat_input`), free hosting on Streamlit Community Cloud. Other options: Gradio (similar, but chat ergonomics and hosting story weaker for this case), Chainlit (chat-first but heavier and less general), React (most flexible and most production-realistic, but a full frontend build/deploy pipeline is disproportionate for a portfolio demo) |
+| Two-service architecture: UI calls the API over HTTP rather than importing `chain.recommend()` directly | Keeps the frontend/backend boundary visible and demonstrates real API consumption — the same way an external client would integrate. The two services deploy, scale, and version independently. Importing the chain would have been simpler but would collapse the separation the project is meant to showcase |
+| `BLOOMBOT_API_URL` env var for the API target, defaulting to `http://localhost:8000` | One codebase points at the local API in dev and the Render API in production with no code change; localhost stays as a dev-only default. Avoids hardcoding a deployment URL into source |
+| `RecommendResponse` contract change: added a nested `meta` object (`retrieval_time_ms`, `llm_time_ms`, `prompt_tokens`, `completion_tokens`, `total_tokens`) | **Deliberate reversal, not drift.** Phase 4 explicitly kept observability metadata out of the client response (logs only). Phase 5 reverses that: surfacing latency and token/cost signals in the UI is a portfolio asset — it shows observability awareness to AI-engineering reviewers. `retrieved_ids` stays logs-only, so the reversal is scoped to what a viewer benefits from seeing, not a wholesale exposure of internals |
+| Separate `ui/requirements.txt` (only `streamlit` + `requests`, pinned to the root versions) | Streamlit Cloud installs from the requirements file next to the app. A UI-only file keeps that deploy lean — the API's heavy deps (chromadb, openai, langchain, etc.) are irrelevant to a thin HTTP client and would bloat the build |
+| Env var injection via Streamlit Cloud secrets (TOML in the dashboard) | Streamlit Community Cloud exposes dashboard secrets as environment variables, so the app reads `BLOOMBOT_API_URL` through `os.environ` without Streamlit-specific code (`st.secrets`). Keeps the UI code deployment-agnostic — it runs the same locally with a shell env var |
+
+### System design
+
+The UI is a thin client: it owns presentation and conversation-history state (`st.session_state`) but no domain logic. All retrieval and generation stays server-side in the API. This is the standard separation a real product would use, and it means the API can be consumed by other clients (a future mobile app, a partner integration) without change.
+
+Streamlit's execution model re-runs the whole script on every interaction, so message history must live in `st.session_state` and be replayed each run; per-message metadata is stored alongside the text so the **Details** expander survives re-runs.
+
+### Notes
+
+`chroma_db/chroma.sqlite3` had been gitignored while the HNSW vector-index binaries were tracked. The Render deploy therefore shipped vector segments but not the SQLite file that registers the `bouquets` collection, so ChromaDB failed to find the collection at runtime. Fix was to un-ignore and commit the file. Root cause: a persistent Chroma store is a *directory* (metadata DB + per-collection index files), and gitignoring one part silently produces an incomplete store that only fails on a fresh deploy, not locally where the file already exists. Committing the store works for a small static catalog; a production path would rebuild it at container start via `app.ingest` instead.
+
+---
 
 ## Open items carried forward
 - Redis-backed rate limiting if the service moves beyond a single instance
