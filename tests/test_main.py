@@ -62,9 +62,18 @@ def test_recommend_valid_query_returns_200():
         response = client.post("/recommend", json={"query": "cheerful birthday flowers"})
 
     assert response.status_code == 200
-    # The API response shape is unchanged: only the recommendation text is
-    # returned to the client, never the internal observability metadata.
-    assert response.json() == {"recommendation": "I recommend the Sunset Garden!"}
+    # The response carries the recommendation plus a `meta` block of timing/token
+    # diagnostics (retrieved_ids stays internal — logs only, not the API).
+    assert response.json() == {
+        "recommendation": "I recommend the Sunset Garden!",
+        "meta": {
+            "retrieval_time_ms": 4.5,
+            "llm_time_ms": 12.3,
+            "prompt_tokens": 120,
+            "completion_tokens": 45,
+            "total_tokens": 165,
+        },
+    }
 
 
 def test_recommend_empty_query_returns_422():

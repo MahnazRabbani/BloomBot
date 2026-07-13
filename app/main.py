@@ -57,8 +57,23 @@ class RecommendRequest(BaseModel):
         return v
 
 
+class RecommendMeta(BaseModel):
+    """Observability metadata for a single recommendation.
+
+    Exposed to the client so UIs can show timing/token diagnostics. These
+    numbers are also emitted to the structured logs via :func:`_log_request`.
+    """
+
+    retrieval_time_ms: float = Field(..., description="Time spent in retrieval.")
+    llm_time_ms: float = Field(..., description="Time spent in the LLM call.")
+    prompt_tokens: int = Field(..., description="Tokens in the prompt.")
+    completion_tokens: int = Field(..., description="Tokens in the completion.")
+    total_tokens: int = Field(..., description="Prompt + completion tokens.")
+
+
 class RecommendResponse(BaseModel):
     recommendation: str = Field(..., description="The florist assistant's reply.")
+    meta: RecommendMeta = Field(..., description="Timing and token diagnostics.")
 
 
 @app.get("/")
@@ -105,7 +120,16 @@ def recommend_bouquet(
         ) from exc
 
     _log_request(payload.query, start, result=result)
-    return RecommendResponse(recommendation=result["recommendation"])
+    return RecommendResponse(
+        recommendation=result["recommendation"],
+        meta=RecommendMeta(
+            retrieval_time_ms=result["retrieval_time_ms"],
+            llm_time_ms=result["llm_time_ms"],
+            prompt_tokens=result["prompt_tokens"],
+            completion_tokens=result["completion_tokens"],
+            total_tokens=result["total_tokens"],
+        ),
+    )
 
 
 def _log_request(
