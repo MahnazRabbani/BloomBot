@@ -4,13 +4,39 @@
 
 An AI-powered bouquet recommendation API. Describe what you need in natural language, get back a personalized flower recommendation grounded in a real product catalog.
 
-**Live demo:** https://bloombot-ifh6.onrender.com/docs
+**Try it live:** [bloombot-your-personal-florist.streamlit.app](https://bloombot-your-personal-florist.streamlit.app/)
 
 ## What it does
 
 A customer describes an occasion, mood, or preference in plain language (e.g. *"something for my mother's 60th birthday, she loves purple, budget around $80"*), and the system retrieves the most relevant bouquets from a catalog and explains why each one fits, using retrieval-augmented generation (RAG) so recommendations are grounded in real inventory rather than invented by the LLM.
 
+## Demo
+
+- **Chat UI:** [bloombot-your-personal-florist.streamlit.app](https://bloombot-your-personal-florist.streamlit.app/)
+- **API:** [bloombot-ifh6.onrender.com](https://bloombot-ifh6.onrender.com) (interactive docs at [`/docs`](https://bloombot-ifh6.onrender.com/docs))
+
+> Both services run on free tiers and sleep when idle — the first request may take a moment to wake them up.
+
+Chat with the assistant and get a bouquet recommendation grounded in the catalog:
+
+![BloomBot chat UI](docs/screenshots/chat_demo.png)
+
+Each response has an expandable **Details** panel showing retrieval time, LLM response time, and token usage:
+
+![BloomBot response metadata](docs/screenshots/chat_details.png)
+
 ## Architecture
+
+Two separately deployed services communicate over HTTP:
+
+```
+Streamlit UI  ──HTTP──▶  FastAPI API  ──▶  OpenAI (embeddings + gpt-4o-mini)
+(Streamlit Cloud)        (Render)      └─▶  ChromaDB (vector store)
+```
+
+The UI is a thin client: it calls the API's `POST /recommend` endpoint over HTTP rather than importing the RAG code directly, so the two can be deployed, scaled, and updated independently. All retrieval and generation happens server-side in the API.
+
+Inside the API, each request runs the RAG pipeline:
 
 ```
 Customer query
@@ -32,13 +58,14 @@ The catalog (30 bouquets) is embedded once at ingestion time and stored in a per
 
 - **Language:** Python
 - **API framework:** FastAPI
+- **UI:** Streamlit (chat interface, deployed on Streamlit Community Cloud)
 - **LLM:** OpenAI gpt-4o-mini
 - **Embeddings:** OpenAI text-embedding-3-small
 - **Vector store:** ChromaDB
 - **Testing:** pytest
 - **Rate limiting:** slowapi
 - **Containerization:** Docker
-- **Deployment:** Render
+- **Deployment:** Render (API) + Streamlit Community Cloud (UI)
 - **Logging:** python-json-logger (structured JSON logging)
 - **Evaluation:** Custom retrieval + LLM-as-judge pipelines, gpt-4o as judge model
 
@@ -87,8 +114,19 @@ Request:
 
 Response (200):
 ```json
-{ "recommendation": "..." }
+{
+  "recommendation": "...",
+  "meta": {
+    "retrieval_time_ms": 815.0,
+    "llm_time_ms": 2927.0,
+    "prompt_tokens": 671,
+    "completion_tokens": 171,
+    "total_tokens": 842
+  }
+}
 ```
+
+The `meta` block carries timing and token diagnostics (the Streamlit UI surfaces these in its **Details** panel); retrieved bouquet IDs stay server-side in the logs only.
 
 Validation and limits:
 - `query` must be 1-500 characters and not blank/whitespace-only (422 if violated)
