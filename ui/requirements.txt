@@ -1,0 +1,5 @@
+# Dependencies for the Streamlit Community Cloud deployment of the UI.
+# Streamlit Cloud installs from this file when the app's root is set to `ui/`.
+# Kept minimal and pinned to match the root requirements.txt.
+streamlit==1.59.1
+requests==2.34.2
