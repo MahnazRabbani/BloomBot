@@ -10,7 +10,6 @@ __pycache__/
 .DS_Store
 
 # ChromaDB local store
-chroma_db/chroma.sqlite3
 
 # Eval run output
 evals/retrieval_results.json
