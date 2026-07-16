@@ -197,3 +197,5 @@ Test queries are categorized by type (occasion, aesthetic, constraint, multi-con
 ## Project status
 
 Phases 1-5 complete: MVP, production quality (testing, error handling, input validation, rate limiting), CI/CD, monitoring + evaluation, and a deployed Streamlit chat UI. See `/docs` for phase-by-phase learning notes and design decisions.
+
+See [docs/roadmap.md](docs/roadmap.md) for phases 6 to 12.
